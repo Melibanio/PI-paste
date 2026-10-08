@@ -13,7 +13,7 @@ import java.util.List;
 public class CarDAO {
 
     public void createCar(Car car) {
-
+    //CREATE TABLE CAR(ID INT PRIMARY KEY AUTO_INCREMENT, NAME VARCHAR(255)); - adicionar no h2
         String SQL = "INSERT INTO CAR (NAME) VALUES (?)";
 
         try {
