@@ -1,9 +1,8 @@
 package br.com.carstore.servlet;
 
-import br.com.carstore.dao.CarDAO;
+import br.com.carstore.dao.CarDao;
 import br.com.carstore.model.Car;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,17 +13,25 @@ import java.io.IOException;
 public class CreateCarServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
-        String name = request.getParameter("name");
+        String carId = req.getParameter("id");
+        String carName = req.getParameter("car-name");
 
-        Car car = new Car();
-        car.setName(name);
+        CarDao carDao = new CarDao();
+        Car car = new Car(carId, carName);
 
-        CarDAO dao = new CarDAO();
-        dao.createCar(car);
+        if (carId.isBlank()) {
 
-       resp.sendRedirect("/find-all-cars");
+            carDao.createCar(car);
+
+        } else {
+
+            carDao.updateCar(car);
+        }
+
+
+        resp.sendRedirect("/find-all-cars");
 
     }
 

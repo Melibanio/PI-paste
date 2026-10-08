@@ -1,6 +1,6 @@
 package br.com.carstore.servlet;
 
-import br.com.carstore.dao.CarDAO;
+import br.com.carstore.dao.CarDao;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +16,7 @@ public class DeleteCarServlet extends HttpServlet {
 
         String carId = req.getParameter("id");
 
-        new CarDAO().deleteCarById(carId);
+        new CarDao().deleteCarById(carId);
 
         resp.sendRedirect("/find-all-cars");
 

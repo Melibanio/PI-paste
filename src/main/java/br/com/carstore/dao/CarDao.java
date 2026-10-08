@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CarDAO {
+public class CarDao {
 
     public void createCar(Car car) {
-
+    //CREATE TABLE CAR(ID INT PRIMARY KEY AUTO_INCREMENT, NAME VARCHAR(255)); - adicionar no h2
         String SQL = "INSERT INTO CAR (NAME) VALUES (?)";
 
         try {
@@ -107,6 +107,34 @@ public class CarDAO {
         } catch (Exception e) {
 
             System.out.println("Falha ao deletar o carro no banco de dados: " + e.getMessage());
+
+        }
+
+    }
+    public void updateCar(Car car) {
+
+        String SQL = "UPDATE CAR SET NAME = ? WHERE ID = ?";
+
+        try {
+
+            Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa","sa");
+
+            System.out.println("success in database connection");
+
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, car.getName());
+            preparedStatement.setString(2, car.getId());
+            preparedStatement.execute();
+
+            System.out.println("success in update car");
+
+            connection.close();
+
+        } catch (Exception e) {
+
+            System.out.println("fail in database connection");
+            System.out.println("Error: " + e.getMessage());
 
         }
 
